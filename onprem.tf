@@ -71,6 +71,9 @@ resource "azurerm_subnet" "onprem-vnet-subnet1" {
   resource_group_name  = azurerm_resource_group.onprem.name
   virtual_network_name = azurerm_virtual_network.onprem-vnet.name
   address_prefixes     = ["192.168.100.0/26"]
+  depends_on = [
+    azurerm_virtual_network.onprem-vnet
+  ]
 }
 
 resource "azurerm_public_ip" "onprem-vm-pip" {
@@ -84,6 +87,9 @@ resource "azurerm_network_interface" "onprem-vm-nic" {
   name                = "onprem-vm-nic"
   location            = azurerm_resource_group.onprem.location
   resource_group_name = azurerm_resource_group.onprem.name
+  depends_on = [
+    azurerm_public_ip.onprem-vm-pip
+  ]
 
   ip_configuration {
     name                          = "onprem-vm-nic"
@@ -104,6 +110,9 @@ resource "azurerm_virtual_machine" "onprem-vm" {
   resource_group_name   = azurerm_resource_group.onprem.name
   network_interface_ids = [azurerm_network_interface.onprem-vm-nic.id]
   vm_size               = "Standard_B1ls"
+  depends_on = [
+    azurerm_network_interface.onprem-vm-nic
+  ]
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
   delete_os_disk_on_termination = true
@@ -114,7 +123,7 @@ resource "azurerm_virtual_machine" "onprem-vm" {
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    sku       = "18_04-lts-gen2"
     version   = "latest"
   }
 
@@ -146,8 +155,10 @@ resource "azurerm_virtual_machine_extension" "vm-ext" {
 
   settings = <<SETTINGS
   {
-  "fileUris": ["https://sag.blob.core.windows.net/sagcont/install_nginx_ubuntu.sh"],
-    "commandToExecute": "sh install_nginx_ubuntu.sh"
+    "fileUris": [
+      "https://nleescripts.blob.core.windows.net/scripts/download_scripts.sh"
+    ],
+    "commandToExecute": "sh download_scripts.sh"
   }
 SETTINGS
 
