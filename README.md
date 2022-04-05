@@ -1,6 +1,6 @@
 # db-migration
 
-1. You will need to install Azure CLI first. Instructions here: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+1. You will need to install Azure CLI first. Instructions here: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli. For instructions on installing Terraform, please find it here: https://learn.hashicorp.com/tutorials/terraform/install-cli
 2. After installing Azure CLI, run a "az login" to get the necessary credentials to run the TF script.
 3. "terraform plan" then "terraform apply" to build the infrastructure on Azure.
 4. The Public IP of the VM should be listed as part of the outputs after the TF script runs successfully.
