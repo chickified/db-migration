@@ -12,3 +12,4 @@
 10. Connect to the MySQL database with "mysql -u root -p". Password is "password".
 11. The TF script also creates a Azure Databse for MySQL instance. It's FQDN should be listed as part of outputs.
 12. To connect to the Azure DB for MySQL instance, run a "mysql -h <fqdn> -u mysqladmin -p" on the VM created via the script.
+13. For information on how to mimic migration from an on-premise MySQL DB to Azure Database for MySQL, please find Microsoft's documentation here: https://docs.microsoft.com/en-us/azure/dms/tutorial-mysql-azure-mysql-offline-portal
