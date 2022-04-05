@@ -6,6 +6,7 @@
 4. The Public IP of the VM should be listed as part of the outputs after the TF script runs successfully.
 5. ssh azureuser@<publicIP> to access the VM. The password is described in the TF script.
 6. You will need to chmod and chown the script that was downloaded. Perform the following: "sudo chown azureuser /home/azureuser/download_scripts.sh" and "sudo chmod 700 /home/azureuser/download_scripts.sh".
-7. Init the VM and install MySQL with the command "sudo sh init_script.sh". You may encounter an issue which it gets stuck. Continue to let it run for 5 minutes and see if it unfreezes itself. Otherwise do a "Ctrl+c" to exit.
-8. Run a "sudo sh init_mysql.sh" to init the MySQL database.
-9. Connect to the MySQL database with "mysql -u root -p". Password request is "password".
+7. Run the script by executing "sh download_scripts.sh".
+8. Init the VM and install MySQL with the command "sudo sh init_script.sh". You may encounter an issue which it gets stuck. Continue to let it run for 5 minutes and see if it unfreezes itself. Otherwise do a "Ctrl+c" to exit.
+9. Run a "sudo sh init_mysql.sh" to init the MySQL database.
+10. Connect to the MySQL database with "mysql -u root -p". Password request is "password".
