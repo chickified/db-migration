@@ -8,6 +8,9 @@ resource "azurerm_network_security_group" "onprem-nsg" {
   name                = "onprem-nsg"
   location            = azurerm_resource_group.onprem.location
   resource_group_name = azurerm_resource_group.onprem.name
+  depends_on = [
+    azurerm_network_interface.onprem-vm-nic
+  ]
 
   security_rule {
     name                       = "AllowSSH"
@@ -99,7 +102,7 @@ resource "azurerm_network_interface" "onprem-vm-nic" {
   }
 }
 
-resource "azurerm_network_interface_security_group_association" "example" {
+resource "azurerm_network_interface_security_group_association" "nsg-assoc" {
   network_interface_id      = azurerm_network_interface.onprem-vm-nic.id
   network_security_group_id = azurerm_network_security_group.onprem-nsg.id
   depends_on = [
@@ -116,7 +119,8 @@ resource "azurerm_virtual_machine" "onprem-vm" {
   vm_size               = "Standard_B1ls"
   depends_on = [
     azurerm_network_interface.onprem-vm-nic,
-    azurerm_public_ip.onprem-vm-pip
+    azurerm_public_ip.onprem-vm-pip,
+    azurerm_network_interface_security_group_association.nsg-assoc
   ]
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
