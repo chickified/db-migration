@@ -102,6 +102,10 @@ resource "azurerm_network_interface" "onprem-vm-nic" {
 resource "azurerm_network_interface_security_group_association" "example" {
   network_interface_id      = azurerm_network_interface.onprem-vm-nic.id
   network_security_group_id = azurerm_network_security_group.onprem-nsg.id
+  depends_on = [
+    azurerm_network_security_group.onprem-nsg,
+    azurerm_network_interface.onprem-vm-nic
+  ]
 }
 
 resource "azurerm_virtual_machine" "onprem-vm" {
@@ -111,7 +115,8 @@ resource "azurerm_virtual_machine" "onprem-vm" {
   network_interface_ids = [azurerm_network_interface.onprem-vm-nic.id]
   vm_size               = "Standard_B1ls"
   depends_on = [
-    azurerm_network_interface.onprem-vm-nic
+    azurerm_network_interface.onprem-vm-nic,
+    azurerm_public_ip.onprem-vm-pip
   ]
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -158,7 +163,7 @@ resource "azurerm_virtual_machine_extension" "vm-ext" {
     "fileUris": [
       "https://nleescripts.blob.core.windows.net/scripts/download_scripts.sh"
     ],
-    "commandToExecute": "sh download_scripts.sh"
+    "commandToExecute": "cp download_scripts.sh /home/azureuser/download_scripts.sh"
   }
 SETTINGS
 
