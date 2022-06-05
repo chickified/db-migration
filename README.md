@@ -2,7 +2,7 @@
 
 The TF script creates an environment on Azure to mimic migrating an on-premise MySQL DB onto Azure DB for MySQL.
 
-![alt text](https://github.com/chickified/db-migration/blob/master/image.jpg?raw=true)
+![alt text](https://github.com/chickified/db-migration/blob/main/image.jpg?raw=true)
 
 1. You will need to install Azure CLI first. Instructions here: https://docs.microsoft.com/en-us/cli/azure/install-azure-cli. For instructions on installing Terraform, please find it here: https://learn.hashicorp.com/tutorials/terraform/install-cli
 2. After installing Azure CLI, run a "az login" to get the necessary credentials to run the TF script on an environment.
